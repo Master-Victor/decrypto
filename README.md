@@ -1,82 +1,139 @@
-# aws-lambda serverless API
-The aws-lambda project, created with [`aws-serverless-java-container`](https://github.com/aws/serverless-java-container).
 
-The starter project defines a simple `/ping` resource that can accept `GET` requests with its tests.
+# API RESTful - Decrypto
 
-The project folder also includes a `template.yml` file. You can use this [SAM](https://github.com/awslabs/serverless-application-model) file to deploy the project to AWS Lambda and Amazon API Gateway or test in local with the [SAM CLI](https://github.com/awslabs/aws-sam-cli). 
+Este proyecto es una API RESTful serverless desarrollada en Java con Spring Boot para AWS Lambda, siguiendo las indicaciones del desafío técnico. La API permite gestionar recursos de **Comitente**, **Mercado** y **País**, así como consultar estadísticas de distribución de comitentes por país y mercado. La aplicación está documentada con Swagger y cuenta con endpoints CRUD básicos.
 
-## Pre-requisites
-* [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
-* [Gradle](https://gradle.org/) or [Maven](https://maven.apache.org/)
+### URL de la API
 
-## Building the project
-You can use the SAM CLI to quickly build the project
-```bash
-$ mvn archetype:generate -DartifactId=aws-lambda -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.0.3 -DgroupId=rest.decrypto -Dversion=1.0-SNAPSHOT -Dinteractive=false
-$ cd aws-lambda
-$ sam build
-Building resource 'AwsLambdaFunction'
-Running JavaGradleWorkflow:GradleBuild
-Running JavaGradleWorkflow:CopyArtifacts
+La API está desplegada en AWS y puede ser accedida mediante los siguientes endpoints:
+- [Swagger UI](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/swagger-ui.html) - Documentación de la API
+- **Países**: [GET /api/paises](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/paises)
+- **Mercados**: [GET /api/mercados](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/mercados)
+- **Comitentes**: [GET /api/comitentes](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/comitentes)
+- **Estadísticas**: [GET /stats](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/stats)
 
-Build Succeeded
+### Características
 
-Built Artifacts  : .aws-sam/build
-Built Template   : .aws-sam/build/template.yaml
+- **CRUD** para gestionar **Comitente**, **Mercado** y **País**.
+- Relación muchos a muchos entre comitentes y mercados.
+- **Documentación OpenAPI/Swagger** para los endpoints.
+- Endpoint `/stats` que proporciona estadísticas de comitentes por país y mercado.
+- Desplegado en **AWS Lambda** utilizando **API Gateway**.
 
-Commands you can use next
-=========================
-[*] Invoke Function: sam local invoke
-[*] Deploy: sam deploy --guided
+### Requisitos
+
+- **Java 17**
+- **Maven**
+- **AWS CLI** (opcional para despliegue en AWS)
+- **MySQL** (si se utiliza en entorno local)
+
+### Configuración
+
+#### 1. Base de Datos
+La API utiliza MySQL como base de datos. Configure los detalles de conexión en el archivo `application.properties`.
+
+```properties
+spring.datasource.url=jdbc:mysql://<host>:<puerto>/<nombre_bd>
+spring.datasource.username=<usuario>
+spring.datasource.password=<contraseña>
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 ```
 
-## Testing locally with the SAM CLI
+#### 2. Swagger
+En entorno local, la documentación Swagger estará disponible en `/swagger-ui.html`. Para deshabilitar Swagger en AWS, comente la línea en el archivo `application.properties`:
 
-From the project root folder - where the `template.yml` file is located - start the API with the SAM CLI.
-
-```bash
-$ sam local start-api
-
-...
-Mounting com.amazonaws.serverless.archetypes.StreamLambdaHandler::handleRequest (java11) at http://127.0.0.1:3000/{proxy+} [OPTIONS GET HEAD POST PUT DELETE PATCH]
-...
+```properties
+# Configuración de Swagger
+springdoc.swagger-ui.enabled=true
+# Configuración para AWS
+#springdoc.swagger-ui.enabled=false
 ```
 
-Using a new shell, you can send a test ping request to your API:
+### Ejecución
 
-```bash
-$ curl -s http://127.0.0.1:3000/ping | python -m json.tool
+#### 1. Ejecución en Entorno Local
 
-{
-    "pong": "Hello, World!"
-}
-``` 
-
-## Deploying to AWS
-To deploy the application in your AWS account, you can use the SAM CLI's guided deployment process and follow the instructions on the screen
-
-```
-$ sam deploy --guided
-```
-
-Once the deployment is completed, the SAM CLI will print out the stack's outputs, including the new application URL. You can use `curl` or a web browser to make a call to the URL
-
-```
-...
--------------------------------------------------------------------------------------------------------------
-OutputKey-Description                        OutputValue
--------------------------------------------------------------------------------------------------------------
-AwsLambdaApi - URL for application            https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/pets
--------------------------------------------------------------------------------------------------------------
-```
-
-Copy the `OutputValue` into a browser or use curl to test your first request:
+Clona el repositorio, instala las dependencias y ejecuta el proyecto:
 
 ```bash
-$ curl -s https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping | python -m json.tool
-
-{
-    "pong": "Hello, World!"
-}
+git clone <URL_REPO>
+cd aws-lambda
+mvn clean install
+mvn spring-boot:run
 ```
+
+Accede a la API en `http://localhost:8080`.
+
+#### 2. Despliegue en AWS Lambda
+
+Para desplegar en AWS:
+1. Cambia el perfil de Spring a `aws` y descomenta las anotaciones `@Configuration` y `@Controller` en las clases correspondientes.
+2. Compila el proyecto en un JAR sombreado (shaded JAR) y utiliza el AWS CLI o SAM CLI para desplegarlo.
+
+### Endpoints
+
+1. **Países**:
+    - `GET /api/paises`: Listar todos los países.
+    - `GET /api/paises/{id}`: Obtener un país por su ID.
+
+2. **Mercados**:
+    - `GET /api/mercados`: Listar todos los mercados.
+    - `GET /api/mercados/{id}`: Obtener un mercado por su ID.
+    - `POST /api/mercados`: Crear un nuevo mercado.
+    - `PUT /api/mercados/{id}`: Actualizar un mercado existente.
+    - `DELETE /api/mercados/{id}`: Eliminar un mercado.
+
+3. **Comitentes**:
+    - `GET /api/comitentes`: Listar todos los comitentes.
+    - `GET /api/comitentes/{id}`: Obtener un comitente por su ID.
+    - `POST /api/comitentes`: Crear un nuevo comitente.
+    - `PUT /api/comitentes/{id}`: Actualizar un comitente existente.
+    - `DELETE /api/comitentes/{id}`: Eliminar un comitente.
+
+4. **Estadísticas**:
+    - `GET /stats`: Proporciona un resumen de la distribución de comitentes por país y mercado.
+
+### Ejemplo de Respuesta `/stats`
+
+```json
+[
+  {
+    "country": "Argentina",
+    "market": [
+      {
+        "MAE": {
+          "percentage": "80.75"
+        },
+        "ROFEX": {
+          "percentage": "2.00"
+        }
+      ]
+    ]
+  },
+  {
+    "country": "Uruguay",
+    "market": [
+      {
+        "UFEX": {
+          "percentage": "17.25"
+        }
+      }
+    ]
+  }
+]
+```
+
+### Link del despliegue
+[API en AWS](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api)
+
+Puedes acceder a la interfaz de Swagger para probar los endpoints en la siguiente URL:
+
+[Swagger UI](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/swagger-ui.html)
+
+### Endpoints disponibles
+- **Países**: [GET /api/paises](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/paises)
+- **Mercados**: [GET /api/mercados](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/mercados)
+- **Comitentes**: [GET /api/comitentes](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/comitentes)
+- **Estadísticas**: [GET /stats](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/stats)
