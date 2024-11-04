@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//@Controller Descomentar para desplegar en AWS
+//@Controller //Descomentar para desplegar en AWS
 /* @Profile("aws") */
 public class SwaggerController {
     @GetMapping("/swagger-ui.html")
