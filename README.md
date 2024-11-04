@@ -1,7 +1,23 @@
 
 # API RESTful - Decrypto
 
-Este proyecto es una API RESTful serverless desarrollada en Java con Spring Boot para AWS Lambda, siguiendo las indicaciones del desafío técnico. La API permite gestionar recursos de **Comitente**, **Mercado** y **País**, así como consultar estadísticas de distribución de comitentes por país y mercado. La aplicación está documentada con Swagger y cuenta con endpoints CRUD básicos.
+Este proyecto es una API REST que gestiona las entidades `Comitente`, `Mercado` y `País` con operaciones CRUD. La API está diseñada para cubrir las siguientes funcionalidades:
+
+1. Crear, leer, actualizar y eliminar comitentes, mercados y países.
+2. Relacionar comitentes y mercados, cumpliendo con una relación muchos a muchos.
+3. Limitar los valores del atributo `País` solo a Argentina y Uruguay.
+4. Proporcionar estadísticas sobre la distribución de comitentes por país y mercado.
+
+## Requisitos 
+
+- **Restricción de Comitentes duplicados**: La API asegura que no puede haber comitentes duplicados mediante validaciones en la base de datos (por ejemplo, usando una clave única en el campo `Descripción` de Comitente).
+
+- **Atributos**:
+    - **Comitente**: Incluye los campos `Id` (identificador único) y `Descripción`.
+    - **Mercado**: Incluye los campos `Id`, `Código`, `Descripción` y `País`.
+    - **Países**: Solo se admiten los valores "Argentina" y "Uruguay".
+
+- **Pre-carga de datos complementarios**: Las entidades complementarias necesarias, como los registros de `País`, estarán pre-cargadas al iniciar la API para asegurar que la información esté disponible.
 
 ### URL de la API
 
