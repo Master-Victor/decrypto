@@ -58,7 +58,7 @@ springdoc.swagger-ui.enabled=true
 Clona el repositorio, instala las dependencias y ejecuta el proyecto:
 
 ```bash
-git clone <URL_REPO>
+git clone https://github.com/Master-Victor/decrypto
 cd aws-lambda
 mvn clean install
 mvn spring-boot:run

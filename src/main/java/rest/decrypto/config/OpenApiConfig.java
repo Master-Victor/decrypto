@@ -19,7 +19,7 @@ public class OpenApiConfig {
                         .version("1.0")
                         .description("API Documentation for Decrypto"));
 
-        // Configura el servidor en función del entorno
+        // Configura el servidor
         String serverUrl = "https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev";
 
         openAPI.addServersItem(new Server().url(serverUrl).description("Server"));

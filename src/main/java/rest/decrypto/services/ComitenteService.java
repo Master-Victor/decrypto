@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rest.decrypto.dtos.ComitenteDTO;
-import rest.decrypto.dtos.MercadoDTO;
 import rest.decrypto.dtos.MercadoSimpleDTO;
 import rest.decrypto.models.Comitente;
 import rest.decrypto.models.ComitenteMercado;

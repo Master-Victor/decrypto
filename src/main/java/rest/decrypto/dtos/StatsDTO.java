@@ -7,7 +7,6 @@ import rest.decrypto.models.Comitente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -27,20 +26,17 @@ public class StatsDTO {
                                 Collectors.counting() // Contar la cantidad de comitentes en cada mercado
                         )
                 ));
-        System.out.println(comitentesByCountryAndMarket.toString());
         int activeMercados = comitentesByCountryAndMarket.values().stream()
                 .flatMap(map -> map.values().stream()) // Extraer los valores de cada mapa interno
                 .mapToInt(Long::intValue) // Convertir cada valor a int
                 .sum();
 
-        System.out.println("Mercados activos: " + activeMercados);
         List<StatsDTO> countryStats = new ArrayList<>();
 
         // Iterar sobre cada país y sus mercados
         for (Map.Entry<String, Map<String, Long>> countryEntry : comitentesByCountryAndMarket.entrySet()) {
             String country = countryEntry.getKey();
             Map<String, Long> markets = countryEntry.getValue();
-            System.out.println("Mercados: " + markets.toString());
             // Lista para almacenar los datos de cada mercado en el país
             List<MarketStatsDTO> marketStatsList = new ArrayList<>();
 
@@ -50,7 +46,6 @@ public class StatsDTO {
 
                 // Calcular el porcentaje basado en el total global de comitentes
                 double percentage = ((double) marketCount / activeMercados) * 100;
-                System.out.println("Porcentaje: " + percentage);
                 // Crear MarketStatsDTO para cada mercado
                 MarketStatsDTO marketStatsDTO = new MarketStatsDTO();
                 PercentageDTO percentageDTO = new PercentageDTO(String.format("%.2f", percentage));

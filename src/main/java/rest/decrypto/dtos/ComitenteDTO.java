@@ -1,6 +1,5 @@
 package rest.decrypto.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import java.util.Set;
 
@@ -8,6 +7,5 @@ import java.util.Set;
 public class ComitenteDTO {
     private Long id;
     private String descripcion;
-    //@JsonIgnore
     private Set<MercadoSimpleDTO> mercados;
 }

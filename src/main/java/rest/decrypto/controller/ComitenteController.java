@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rest.decrypto.dtos.ComitenteDTO;
-import rest.decrypto.models.Comitente;
 import rest.decrypto.services.ComitenteService;
 
 import java.util.List;

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rest.decrypto.dtos.MercadoDTO;
-import rest.decrypto.models.Mercado;
 import rest.decrypto.services.MercadoService;
 
 import java.util.List;
