@@ -124,16 +124,3 @@ Para desplegar en AWS:
   }
 ]
 ```
-
-### Link del despliegue
-[API en AWS](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api)
-
-Puedes acceder a la interfaz de Swagger para probar los endpoints en la siguiente URL:
-
-[Swagger UI](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/swagger-ui.html)
-
-### Endpoints disponibles
-- **Países**: [GET /api/paises](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/paises)
-- **Mercados**: [GET /api/mercados](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/mercados)
-- **Comitentes**: [GET /api/comitentes](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/api/comitentes)
-- **Estadísticas**: [GET /stats](https://mmszt7n0bl.execute-api.sa-east-1.amazonaws.com/dev/stats)
