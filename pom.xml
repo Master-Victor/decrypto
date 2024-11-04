@@ -86,6 +86,13 @@
     </dependencyManagement>
 
     <profiles>
+        <!-- Perfil para entorno AWS -->
+        <profile>
+            <id>aws</id>
+            <properties>
+                <spring.profiles.active>aws</spring.profiles.active>
+            </properties>
+        </profile>
         <profile>
             <id>shaded-jar</id>
             <build>
@@ -123,7 +130,6 @@
             </activation>
             <build>
                 <plugins>
-                    <!-- don't build a jar, we'll use the classes dir -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
@@ -143,7 +149,6 @@
                             <skip>true</skip>
                         </configuration>
                     </plugin>
-                    <!-- select and copy only runtime dependencies to a temporary lib folder -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
