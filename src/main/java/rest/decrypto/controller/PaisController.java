@@ -10,18 +10,18 @@ import rest.decrypto.services.PaisService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class PaisController {
 
     @Autowired
     private PaisService paisService;
 
-    @GetMapping("/paises")
+    @GetMapping("/api/paises")
     public List<Pais> getAllPaises() {
         return paisService.getAllPaises();
     }
 
-    @GetMapping("/paises/{id}")
+    @GetMapping("/api/paises/{id}")
     public ResponseEntity<?> getPaisById(@PathVariable Long id) {
         try {
             Pais pais = paisService.getPaisById(id);
@@ -33,7 +33,7 @@ public class PaisController {
 
     }
 
-    @PostMapping("/paises")
+/*    @PostMapping("/api/paises")
     public ResponseEntity<?> createPais(@RequestBody Pais pais) {
         try {
             Pais newPais = paisService.createPais(pais);
@@ -44,7 +44,7 @@ public class PaisController {
         }
     }
 
-    @PutMapping("/paises/{id}")
+    @PutMapping("/api/paises/{id}")
     public ResponseEntity<?> updatePais(@PathVariable Long id, @RequestBody Pais pais) {
         try {
             Pais updatedPais = paisService.updatePais(id, pais);
@@ -55,7 +55,7 @@ public class PaisController {
         }
     }
 
-    @DeleteMapping("/paises/{id}")
+    @DeleteMapping("/api/paises/{id}")
     public ResponseEntity<?> deletePais(@PathVariable Long id) {
         try {
             paisService.deletePais(id);
@@ -64,7 +64,7 @@ public class PaisController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al eliminar el pais: " + e.getMessage());
         }
-    }
+    }*/
     @GetMapping("/stats")
     public ResponseEntity<?> getStats() {
         try {
